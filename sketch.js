@@ -1,5 +1,5 @@
-var rows = 25;
-var cols = 25;
+var rows = 20;
+var cols = 20;
 // width and height of the spot
 var w, h;
 var start, end;
@@ -9,6 +9,7 @@ var grid = new Array(cols);
 var openSet = [];
 var closedSet = [];
 var path = [];
+var nosolution = false;
 
 function removeFromSet(set, element) {
   for (var i = set.length - 1; i >= 0; i--) {
@@ -36,7 +37,7 @@ function spot(i, j) {
   this.previous = null;
   this.obstacle = false;
 
-  if(random(0, 1) < 0.1) {
+  if(random(0, 1) < 0.3) {
    this.obstacle = true;
   }
   // Show the spot
@@ -96,8 +97,9 @@ function setup() {
 
   // Start and end point initiaization
   start = grid[0][0];
-  end = grid[cols-7][rows-4];
-  end.show(color(0));
+  end = grid[cols-1][rows-1];
+  start.obstacle = false;
+  end.obstacle = false;
   // Initial condition
   openSet.push(start);
   
@@ -153,6 +155,10 @@ function draw() {
    }
 
   } else {
+    console.log("No optimal path exists");
+    nosolution = true;
+    noLoop();
+  
   }
 
   // Background colour
@@ -177,13 +183,15 @@ function draw() {
   }
 
   // Coloring path by every frame
-  path = [];
-  var final = current;
-  path.push(final);
-  while(final.previous) {
-    path.push(final.previous);
-    final = final.previous;
+  if(!nosolution){
+    path = [];
+    var final = current;
+    path.push(final);
+    while(final.previous) {
+      path.push(final.previous);
+      final = final.previous;
   }
+}
 
   for (var i = 0; i < path.length; i++) {
       path[i].show(color(0, 0, 255));
