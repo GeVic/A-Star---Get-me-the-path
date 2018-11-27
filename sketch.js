@@ -36,7 +36,7 @@ function spot(i, j) {
   this.previous = null;
   this.obstacle = false;
 
-  if(random(0, 5) < 3) {
+  if(random(0, 1) < 0.1) {
    this.obstacle = true;
   }
   // Show the spot
@@ -133,7 +133,7 @@ function draw() {
    for (var j = 0; j < neighbors.length; j++) {
      var neighbor = neighbors[j];
 
-     if (!closedSet.includes(neighbor)) {
+     if (!closedSet.includes(neighbor) && !neighbor.obstacle) {
        var tentative_gvalue = current.gValue + 1; 
        //Check if i have more efficient path to this neighbor
        if(openSet.includes(neighbor)) {
