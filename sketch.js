@@ -34,10 +34,18 @@ function spot(i, j) {
   this.j = j;
   this.neighbors = [];
   this.previous = null;
+  this.obstacle = false;
 
+  if(random(0, 5) < 3) {
+   this.obstacle = true;
+  }
   // Show the spot
   this.show = function(col) {
     fill(col);
+    if(this.obstacle) {
+      // Fill the spot with black colour
+      fill(0);
+    }
     noStroke();
     // show the box
     rect(this.i*w, this.j*h, w-1, h-1);
@@ -153,9 +161,7 @@ function draw() {
   // To show the grid
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-      if(grid[i][j] != end){
-        grid[i][j].show(color(255));
-      }
+      grid[i][j].show(color(255));
     }
   }
   
@@ -167,9 +173,7 @@ function draw() {
   }
 
   for (var i = 0; i < openSet.length; i++) {
-    if(openSet[i] != end){
       openSet[i].show(color(0, 255, 0));
-    }
   }
 
   // Coloring path by every frame
@@ -182,9 +186,7 @@ function draw() {
   }
 
   for (var i = 0; i < path.length; i++) {
-    if(path[i] != end){
       path[i].show(color(0, 0, 255));
-    }
   }
 
 
