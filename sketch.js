@@ -1,5 +1,5 @@
-var rows = 20;
-var cols = 20;
+var rows = 100;
+var cols = 100;
 // width and height of the spot
 var w, h;
 var start, end;
@@ -9,7 +9,6 @@ var grid = new Array(cols);
 var openSet = [];
 var closedSet = [];
 var path = [];
-var nosolution = false;
 
 function removeFromSet(set, element) {
   for (var i = set.length - 1; i >= 0; i--) {
@@ -22,7 +21,7 @@ function removeFromSet(set, element) {
 
 function heuristic(a, b) {
   // Euclidean distance
-  var distance = abs(a.i, b.i) + abs(a.j, b.j);
+  var distance = dist(a.i, a.j, b.i, b.j);
   return distance;
 }
 
@@ -47,13 +46,13 @@ function spot(i, j) {
       // Fill the spot with black colour
       fill(0);
     }
-    noStroke();
+    stroke(255,255,255);
     // show the box
     rect(this.i*w, this.j*h, w-1, h-1);
   }
 
   this.addNeighbors = function(grid) {
-    if (i < cols -1) {
+    if (i < cols - 1) {
       this.neighbors.push(grid[this.i + 1][this.j]);
     }
     if (i > 0) {
@@ -64,6 +63,18 @@ function spot(i, j) {
     }
     if(j > 0) {
       this.neighbors.push(grid[this.i][this.j - 1]);
+    }
+    if(i > 0 && j > 0) {
+      this.neighbors.push(grid[this.i - 1][this.j - 1]);
+    }
+    if(j < rows - 1 && i < cols - 1) {
+      this.neighbors.push(grid[this.i + 1][this.j + 1]);
+    }
+    if(j < rows - 1 && i > 0) {
+      this.neighbors.push(grid[this.i - 1][this.j + 1]);
+    }
+    if(j > 0 && i < cols - 1) {
+      this.neighbors.push(grid[this.i + 1][this.j - 1]);
     }
   }
 }
@@ -137,28 +148,32 @@ function draw() {
 
      if (!closedSet.includes(neighbor) && !neighbor.obstacle) {
        var tentative_gvalue = current.gValue + 1; 
+       var validPath = false;
        //Check if i have more efficient path to this neighbor
        if(openSet.includes(neighbor)) {
          if(tentative_gvalue < neighbor.gValue) {
            neighbor.gValue = tentative_gvalue;
+           validPath = true;
          } 
        } else {
          neighbor.gValue = tentative_gvalue;
          openSet.push(neighbor);
+         validPath = true;
        }
 
+       if(validPath){
        // Heuristics distance
        neighbor.hValue = heuristic(neighbor, end);
        neighbor.fScore = neighbor.hValue + neighbor.gValue;
        neighbor.previous = current;
+       }
      }
    }
 
   } else {
     console.log("No optimal path exists");
-    nosolution = true;
     noLoop();
-  
+    return;
   }
 
   // Background colour
@@ -167,23 +182,20 @@ function draw() {
   // To show the grid
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
-      grid[i][j].show(color(255));
+      grid[i][j].show(color(255, 255, 255));
     }
   }
   
   // Current open and closed nodes
   for (var i = 0; i < closedSet.length; i++) {
-    if(closedSet[i] != end){
-      closedSet[i].show(color(255, 0, 0));
-    }
+      closedSet[i].show(color(219,68,55));
   }
 
   for (var i = 0; i < openSet.length; i++) {
-      openSet[i].show(color(0, 255, 0));
+      openSet[i].show(color(244,160,0));
   }
 
   // Coloring path by every frame
-  if(!nosolution){
     path = [];
     var final = current;
     path.push(final);
@@ -191,11 +203,16 @@ function draw() {
       path.push(final.previous);
       final = final.previous;
   }
-}
 
+  // represent path with continues line instead
+  beginShape();
+  stroke(159,168,218);
+  strokeWeight(w / 2);
+  noFill();
   for (var i = 0; i < path.length; i++) {
-      path[i].show(color(0, 0, 255));
+    vertex(path[i].i*w + w/2, path[i].j*h + h/2);
   }
+  endShape();
 
 
   
