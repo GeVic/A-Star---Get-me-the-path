@@ -8,6 +8,8 @@ Awesome visualization of A* search algorithm using P5.
 **Red Squares** - CLosed Set <br/>
 **Blue Vertex** - Optimal Path
 
+You can see the algo reach it's target at https://gevic.github.io/A-Star-Visualization/
+
 ### What is A* algorithm?
 A* search algorithm is one of the best and popular technique used in path-finding and graph traversals.
 
@@ -18,7 +20,7 @@ It's a smart algorithm which seperates it from the other conventional algorithms
 
 ### How to calculate Heuristics?
 There are many ways to calculate heuristics i.e. **H score**. The two heuristics approximation I tried using in this project are:
-**1. Euclidean Distance**
+**1. Euclidean Distance** <br/>
 **2. Manhattan Distance**
 
 
