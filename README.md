@@ -3,9 +3,9 @@ Awesome visualization of A* search algorithm using P5.
 
 ![alt text](https://github.com/GeVic/A-Star-Visualization/blob/master/Capture.PNG)
 
-**Black Squares** - Obstacles
-**Yellow Squares** - Open Set
-**Red Squares** - CLosed Set
+**Black Squares** - Obstacles <br/>
+**Yellow Squares** - Open Set <br/>
+**Red Squares** - CLosed Set <br/>
 **Blue Vertex** - Optimal Path
 
 ### What is A* algorithm?
@@ -17,8 +17,8 @@ It's a smart algorithm which seperates it from the other conventional algorithms
 
 
 ### How to calculate Heuristics?
-There are many ways to calculate heuristics i.e. g score. The two heuristics approximation I tried using in this project are:
-1. Euclidean Distance
-2. Manhattan Distance
+There are many ways to calculate heuristics i.e. **H score**. The two heuristics approximation I tried using in this project are:
+**1. Euclidean Distance**
+**2. Manhattan Distance**
 
 
