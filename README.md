@@ -5,7 +5,7 @@ Awesome visualization of A* search algorithm using P5.
 
 **Black Squares** - Obstacles
 **Yellow Squares** - Open Set
-**Closed Squares** - CLosed Set
+**Red Squares** - CLosed Set
 **Blue Vertex** - Optimal Path
 
 ### What is A* algorithm?
